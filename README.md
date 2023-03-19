@@ -38,8 +38,6 @@ To operate the "FrostGuard" system, follow these steps:
 
    Replace `<value>` with the desired value for each parameter.
 
-6. To view the up-time of the system, type the command `uptime` in the serial monitor.
-
 7. To stop the system, disconnect the power source.
 
 With the "FrostGuard" system, you can be sure that the RNA extracted from a breast cancer cell line will remain cool and intact during transportation and storage, helping to preserve its quality for further research.
