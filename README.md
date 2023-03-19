@@ -33,6 +33,8 @@ To operate the "FrostGuard" system, follow these steps:
    - `setKP <value>`: Set the proportional gain of the PID controller to `<value>`.
    - `setKI <value>`: Set the integral gain of the PID controller to `<value>`.
    - `setKD <value>`: Set the derivative gain of the PID controller to `<value>`.
+   - `getPID`       : Get the PID controller gain values.
+   - `savePID`      : Saving the PID controller gain values.
 
    Replace `<value>` with the desired value for each parameter.
 
