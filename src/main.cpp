@@ -169,12 +169,6 @@ void loop()
   lcd.print(uptimeSeconds);
   lcd.print("s");
 
-  // Display PID output on the second line of the LCD
-  lcd.setCursor(0, 1);
-  lcd.print("PWM: ");
-  lcd.print(output);
-  lcd.print("  ");
-
   // Set cooling element speed based on PID output
   if (output >= 0)
   {
