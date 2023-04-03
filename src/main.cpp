@@ -4,7 +4,10 @@
 #include <PID_v1.h>            //Library for PID control; PID by Brett Beauregard
 #include <SerialCommand.h>     //Library for serial communication with the Arduino; SerialCommand by Stefan Rado
 #include <EEPROM.h>
+#include <DHT.h>
 
+#define DHTPIN 5           // DHT22 signal pin
+#define DHTTYPE DHT22      // DHT22 sensor type
 #define ONE_WIRE_BUS 2     // Pin connected to DS18B20 data line
 #define COOLING_PIN_A 3    // Pin A of H-bridge connected to cooling element
 #define COOLING_PIN_B 4    // Pin B of H-bridge connected to cooling element
@@ -20,6 +23,8 @@ double KD = 1.0;           // Derivative constant for PID control
 #define PID_I_ADDRESS 2
 #define PID_D_ADDRESS 4
 
+// Initialize DHT22 sensor
+DHT dht(DHTPIN, DHTTYPE);
 // Create a oneWire instance to communicate with DS18B20
 OneWire oneWire(ONE_WIRE_BUS);
 // Create a DallasTemperature instance to read temperature data from DS18B20
@@ -119,6 +124,9 @@ void setup()
   // Initialize DS18B20 temperature sensor
   sensors.begin();
 
+  // Initialize DHT22 sensor
+  dht.begin();
+
   // Initialize I2C LCD
   lcd.init();
   lcd.backlight();
@@ -157,16 +165,29 @@ void loop()
 
   // Request temperature data from DS18B20
   sensors.requestTemperatures();
-  
+
   // Read temperature data from the first sensor (there is only one in this example)
   Input = sensors.getTempCByIndex(0);
 
-  // Display temperature and uptime on the first line of the LCD
+  // Read humidity value from DHT22 sensor
+  float humidity = dht.readHumidity();
+
+  // Display temperature on the first line of the LCD
   lcd.setCursor(0, 0);
-  lcd.print("Temp: ");
+  lcd.print("T: ");
   lcd.print(Input);
   lcd.print((char)223); // Degree symbol
-  lcd.print("C   Uptime: ");
+  lcd.print("C");
+
+  // Display humidity value on the LCD display
+  lcd.setCursor(8, 0); // Set cursor to the first row
+  lcd.print("H: ");    // Display label
+  lcd.print(humidity); // Display humidity value
+  lcd.print("%");      // Display percent sign
+
+  // Display uptime on the LCD
+  lcd.setCursor(0, 1);
+  lcd.print("Uptime: ");
   lcd.print(uptimeSeconds);
   lcd.print("s");
 
